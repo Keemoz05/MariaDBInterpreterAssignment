@@ -5,7 +5,7 @@
 #include <vector>
 #include <sstream> //Reminder that the code has a whitespace problem. If its magically not working, probably because of this.
 using namespace std;
-
+//sigma sigma on the wall whos the skibidiest of them all
 string tablename; //This will have the customer table
 vector<string> columns;
 vector<string> rows;
