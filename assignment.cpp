@@ -5,7 +5,7 @@
 #include <vector>
 #include <sstream>
 using namespace std;
-
+//sigma sigma on the wall whos the skibidiest of them all
 string tablename; //This will have the customer table
 vector<string> columns;
 vector<string> rows;
