@@ -6,20 +6,20 @@
 #include <sstream>
 using namespace std;
 
-string tablename; //customer table
+string tablename; //This will have the customer table
 vector<string> columns;
 vector<string> rows;
 
-string sanitize(const string& str) {  //this is used for string comparison,just dont disturb la
+string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
     string cleanStr;
     for (char c : str) {
         if (isprint(c)) { // Check if character is printable
             cleanStr += c;
         }
     }
-    return cleanStr;    // remove strange character caused by getline or something for compare string to work when program is run in cmd
+    return cleanStr;
 }
-void createcommand(vector<string> createcommand){ //CREATE TABLE customer(customer_id INT,customer_name TEXT,customer_city TEXT,customer_state TEXT,customer_country TEXT, customer_phone TEXT,customer_email TEXT)
+void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(customer_id INT,customer_name TEXT..), This function is to Get its table name(customer) and store the customer_id,customer_name.. in vector columns from line 10.
 
 
     if(createcommand[1].find(".txt") != string::npos ){
@@ -43,7 +43,7 @@ void createcommand(vector<string> createcommand){ //CREATE TABLE customer(custom
     }
     cout << tablename << endl;
     for (string columnvalue : columns){
-        cout << columnvalue << endl;
+        cout << columnvalue << endl;  //remove this when done, used for logging
     }
 
     }
@@ -58,7 +58,7 @@ void insertcommand(vector<string> insertcommand){
 
 }
 
-void commandlist(vector<string> commandwords){  //commandwords["CREATE",'fileoutput.txt')
+void commandlist(vector<string> commandwords){  //If the first command is CREATE, do createfunction,else if first command is INSERT,do insertfunction
 
 
     string firstword = commandwords[0]; //probably not used
