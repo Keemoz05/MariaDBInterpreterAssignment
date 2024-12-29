@@ -3,7 +3,7 @@
 #include <fstream> //A combination of ofstream and ifstream: creates, reads, and writes to files
 #include <bits/stdc++.h>
 #include <vector>
-#include <sstream>
+#include <sstream> //Reminder that the code has a whitespace problem. If its magically not working, probably because of this.
 using namespace std;
 
 string tablename; //This will have the customer table
@@ -50,11 +50,30 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 
 }
 
-void insertcommand(vector<string> insertcommand){
+void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(customer_id,customer_name) VALUES (1, 'namel')
 
-    for (int i = 0;i < insertcommand.size();i++){
-        cout << insertcommand[i] << " + ";
+    string values = insertcommand.back();
+    values.erase(values.find("("),1);
+    values.erase(values.find(")"),1);
+    // Temporary string to store each token
+    std::string token;
+
+    // Use a stringstream for parsing
+    std::stringstream ss(values);
+    while (std::getline(ss, token, ',')) {
+        // Remove single quotes if present
+        if (token.front() == '\'') {
+            token = token.substr(1, token.size() - 2);
+        }
+        rows.push_back(token);
     }
+    //cout << values << endl;
+    for (int i=0;i < rows.size();i++){
+        cout << rows[i] << " " << i << endl;  //remove this when done, used for logging
+    }
+    //for (int i = 0;i < insertcommand.size();i++){
+    //    cout << insertcommand[i] << " + ";
+    //}
 
 }
 
