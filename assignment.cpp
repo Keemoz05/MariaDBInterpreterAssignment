@@ -42,8 +42,8 @@ void createcommand(vector<string> createcommand){ //CREATE TABLE customer(custom
 
     }
     cout << tablename << endl;
-    for (string bombo : columns){
-        cout << bombo << endl;
+    for (string columnvalue : columns){
+        cout << columnvalue << endl;
     }
 
     }
