@@ -51,8 +51,8 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 }
 
 void selectcommand(vector<string> selectcommand){ //SELECT 
-    for (int i=0; i < columns.size(); i++){
-        if (i == columns.size()){
+    for (int i=0; i < 7; i++){
+        if (i == 6){
             cout << columns[i];
         }
         else{
@@ -62,7 +62,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
     }
     cout << endl;
 
-    for (int i=0; i < rows.size(); i++){
+    for (int i=0; i < 28; i++){
         if (i == 6 || i == 13 || i == 20 || i == 27){
             cout << rows[i];
         }
@@ -133,7 +133,7 @@ int main(){
 string command;
 string MyText;
 vector<string> commands;
-ifstream MyReadFile("fileinput2.mdb");
+ifstream MyReadFile("fileinput1.mdb");
 
 
 
