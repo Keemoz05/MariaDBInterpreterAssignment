@@ -50,6 +50,31 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 
 }
 
+void selectcommand(vector<string> selectcommand){ //SELECT 
+    for (int i=0; i < 7; i++){
+        if (i == 6){
+            cout << columns[i];
+        }
+        else{
+            cout << columns[i] << ",";
+        }
+        
+    }
+    cout << endl;
+
+    for (int i=0; i < 28; i++){
+        if (i == 6 || i == 13 || i == 20 || i == 27){
+            cout << rows[i];
+        }
+        else{
+            cout << rows[i] << ",";
+        }
+        
+        if (i == 6 || i == 13 || i == 20 || i == 27)
+           cout << endl;
+    }
+}
+
 void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(customer_id,customer_name) VALUES (1, 'namel')
 
     string values = insertcommand.back();
@@ -84,8 +109,8 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
 
     for (int i =0;i < commandwords.size();i++){
         if(commandwords[i].compare("CREATE") == 0){
-        createcommand(commandwords);
-    }
+            createcommand(commandwords);
+        }
         if(commandwords[i].compare("DATABASES") == 0){
             //cout << commandwords[i] << endl;
             cout << "DO DATABASE FUNCTION" << endl;
@@ -96,6 +121,9 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
         }
         if(commandwords[i].compare("INSERT")==0){
             insertcommand(commandwords);
+        }
+        if(commandwords[i].compare("SELECT") == 0){
+            selectcommand(commandwords);
         }
     }
 
