@@ -23,3 +23,10 @@ INSERT INTO
 customer(customer_id,customer_name,customer_city,customer_state,customer_country,customer_phone,customer_email) VALUES (4,'name4','city4','state4','country4','phone4','email4');
 
 SELECT * FROM customer;
+
+
+UPDATE customer SET customer_email='email333' WHERE customer_id=3;
+SELECT * FROM customer;
+
+DELETE FROM customer WHERE customer_id=4;
+SELECT * FROM customer;
