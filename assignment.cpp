@@ -50,15 +50,15 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 
 }
 
-void selectcommand(vector<string> selectcommand){ //SELECT 
-    for (int i=0; i < 7; i++){
+void selectcommand(vector<string> selectcommand){ //SELECT
+    for (int i=0; i < columns.size(); i++){
         if (i == 6){
             cout << columns[i];
         }
         else{
             cout << columns[i] << ",";
         }
-        
+
     }
     cout << endl;
 
@@ -69,11 +69,33 @@ void selectcommand(vector<string> selectcommand){ //SELECT
         else{
             cout << rows[i] << ",";
         }
-        
+
         if (i == 6 || i == 13 || i == 20 || i == 27)
            cout << endl;
     }
 }
+
+void Updatecommand(vector<string> Updatecommand){
+    int customer_id;
+    int email_index;
+    string new_email;
+                     //note customer_id and new email value is place holder right now
+    customer_id = 3; //formula for every row's email index number is: (n*7)-1
+    email_index = (customer_id * 7) - 1;
+
+    //email updater
+    new_email= "email333";
+    rows[email_index] = new_email;
+
+
+
+
+}
+
+//void Deletecommand()
+
+
+
 
 void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(customer_id,customer_name) VALUES (1, 'namel')
 
@@ -92,6 +114,7 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
         }
         rows.push_back(token);
     }
+
     //cout << values << endl;
     for (int i=0;i < rows.size();i++){
         cout << rows[i] << " " << i << endl;  //remove this when done, used for logging
@@ -114,6 +137,7 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
         if(commandwords[i].compare("DATABASES") == 0){
             //cout << commandwords[i] << endl;
             cout << "DO DATABASE FUNCTION" << endl;
+            cout << tablename << endl;
         }
         if(commandwords[i].compare("TABLES")== 0){
             //cout << commandwords[i] << endl;
@@ -121,9 +145,18 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
         }
         if(commandwords[i].compare("INSERT")==0){
             insertcommand(commandwords);
+
         }
         if(commandwords[i].compare("SELECT") == 0){
             selectcommand(commandwords);
+
+        }
+        if(commandwords[i].compare("UPDATE") == 0){
+            cout << "Do update function"<< endl;
+            Updatecommand(commandwords);
+        }
+        if(commandwords[i].compare("DELETE") == 0){
+            cout << "Do delete function"<< endl;
         }
     }
 
@@ -164,6 +197,7 @@ for (int i =0;i < commands.size();i++){
 
 
 }
+
 
 
 
