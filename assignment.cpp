@@ -42,10 +42,7 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 
 
     }
-    cout << tablename << endl;
-    for (string columnvalue : columns){
-        cout << columnvalue << endl;  //remove this when done, used for logging
-    }
+
 
     }
 
@@ -188,13 +185,6 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
         rows.push_back(token);
     }
 
-    //cout << values << endl;
-    for (int i=0;i < rows.size();i++){
-        cout << rows[i] << " " << i << endl;  //remove this when done, used for logging
-    }
-    //for (int i = 0;i < insertcommand.size();i++){
-    //    cout << insertcommand[i] << " + ";
-    //}
 
 }
 
