@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 #include <sstream> //Reminder that the code has a whitespace problem. If its magically not working, probably because of this.
+
 using namespace std;
 //sigma sigma on the wall whos the skibidiest of them all
 string tablename; //This will have the customer table
@@ -62,7 +63,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
     }
     cout << endl;
 
-    for (int i=0; i < 28; i++){
+    for (int i=0; i < rows.size(); i++){
         if (i == 6 || i == 13 || i == 20 || i == 27){
             cout << rows[i];
         }
@@ -79,27 +80,61 @@ void Updatecommand(vector<string> Updatecommand){
     int customer_id;
     int email_index;
     string new_email;
-                     //note customer_id and new email value is place holder right now
-    customer_id = 3; //formula for every row's email index number is: (n*7)-1
+                            //note customer_id and new email value is place holder right now
+                            //formula for every row's email index number is: (n*7)-1
+    customer_id = 3;
     email_index = (customer_id * 7) - 1;
 
     //email updater
     new_email= "email333";
     rows[email_index] = new_email;
+    for (string test : Updatecommand){
+        cout << test << endl;
+    }
 
 
 
 
 }
 
-void Deletecommand(vector<string> Updatecommand){
+void Deletecommand(vector<string> Deletecommand){
 
+    size_t equal_pos; //uses size_t data
+    string extracted_id;
+    string del_location;
+    string comparer;
+    int WHERE_index;
     int customer_id;
     int customer_index;
     int start_element;
     int vector_bound;
 
-    customer_id = 2;
+    comparer = "WHERE"; //finds the WHERE command in vector of strings in the DEL command line
+    for(int i =0 ; i < Deletecommand.size() ; i++){
+
+
+        if(Deletecommand[i] == comparer){
+            WHERE_index = i;
+            cout << WHERE_index << endl;
+            break;
+
+
+        }
+
+    }
+
+    //for(string commands : Deletecommand){ //goes through each strings in the line that has DELETE (ignore for now)
+    WHERE_index = WHERE_index + 1;              //assumes the index after DELETE is where customer_id is
+    del_location = Deletecommand[WHERE_index];
+    cout << del_location << endl;
+    equal_pos = del_location.find("customer_id=");         //find customer_id=
+    extracted_id = (del_location.substr(equal_pos+12));     //finds the int number
+
+
+    //}
+    customer_id = stoi(extracted_id); //converts str to int for customer_id
+
+
     customer_index = (customer_id * 7); //last element to delete
     start_element = customer_index - 7;
 
@@ -109,27 +144,25 @@ void Deletecommand(vector<string> Updatecommand){
 
     cout << "True vector bound is " << vector_bound << endl;
 
-    if (customer_index == vector_bound){
-        customer_index = customer_index - 1; //if vector bound exceed by only 1 (e.g the last row), make sures the vector range is not exceeded
-        cout << "customer index is " << customer_index<<endl;
-    }
+    //if (customer_index == vector_bound){
+        //customer_index = customer_index - 1; //if vector bound exceed by only 1 (e.g the last row), make sures the vector range is not exceeded
+        //cout << "customer index is " << customer_index<<endl;
+    //}
 
     //else {
         //cout << "The vector bound has been exceeded, program will terminate from this point." << endl;
         //exit(0);
     //}
 
-
-    cout << start_element << endl;
                                                                                     //issues
                                                                                     //1. commas need to be removed
                                                                                     //2. yet to find reason why fourth line cannot be removed
-
+                                                                                    //3. check for invalid customer_
 
     rows.erase(rows.begin() + start_element, rows.begin() + customer_index);
 
 
-    cout << "im working" << endl; //check if function is being called and working
+
 
 }
 
@@ -191,11 +224,18 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
             selectcommand(commandwords);
 
         }
-        if(commandwords[i].compare("UPDATE") == 0){
+        if(commandwords[i].compare("UPDATE") == 0){ //introduce error catching in future iterations
+
+
             cout << "Do update function"<< endl;
             Updatecommand(commandwords);
         }
+
+
+
         if(commandwords[i].compare("DELETE") == 0){
+
+
             cout << "Do delete function"<< endl;
             Deletecommand(commandwords);
         }
@@ -207,7 +247,7 @@ int main(){
 string command;
 string MyText;
 vector<string> commands;
-ifstream MyReadFile("fileinput1.mdb");
+ifstream MyReadFile("fileinput2.mdb");
 
 
 
@@ -238,15 +278,6 @@ for (int i =0;i < commands.size();i++){
 
 
 }
-
-
-
-
-
-}
-
-
-
 
 
 
