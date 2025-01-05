@@ -70,7 +70,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
             cout << rows[i] << ",";
         }
 
-        if (i == 6 || i == 13 || i == 20 || i == 27)
+        if (i == 6 || i == 13 || i == 20 || i == 27) //insert new lines
            cout << endl;
     }
 }
@@ -92,7 +92,47 @@ void Updatecommand(vector<string> Updatecommand){
 
 }
 
-//void Deletecommand()
+void Deletecommand(vector<string> Updatecommand){
+
+    int customer_id;
+    int customer_index;
+    int start_element;
+    int vector_bound;
+
+    customer_id = 2;
+    customer_index = (customer_id * 7); //last element to delete
+    start_element = customer_index - 7;
+
+    cout << "Start element is "<< customer_index << endl;
+
+    vector_bound = rows.size(); //check if vector range has been exceeded or not
+
+    cout << "True vector bound is " << vector_bound << endl;
+
+    if (customer_index == vector_bound){
+        customer_index = customer_index - 1; //if vector bound exceed by only 1 (e.g the last row), make sures the vector range is not exceeded
+        cout << "customer index is " << customer_index<<endl;
+    }
+
+    //else {
+        //cout << "The vector bound has been exceeded, program will terminate from this point." << endl;
+        //exit(0);
+    //}
+
+
+    cout << start_element << endl;
+                                                                                    //issues
+                                                                                    //1. commas need to be removed
+                                                                                    //2. yet to find reason why fourth line cannot be removed
+
+
+    rows.erase(rows.begin() + start_element, rows.begin() + customer_index);
+
+
+    cout << "im working" << endl; //check if function is being called and working
+
+}
+
 
 
 
@@ -157,6 +197,7 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
         }
         if(commandwords[i].compare("DELETE") == 0){
             cout << "Do delete function"<< endl;
+            Deletecommand(commandwords);
         }
     }
 
@@ -192,6 +233,12 @@ for (int i =0;i < commands.size();i++){
     commandlist(words); //execute the commandlist function with words = ['CREATE','example.TXT']
 
 }
+
+
+
+
+}
+
 
 
 
