@@ -4,6 +4,7 @@
 #include <bits/stdc++.h>
 #include <vector>
 #include <sstream> //Reminder that the code has a whitespace problem. If its magically not working, probably because of this.
+#include <windows.h>
 
 using namespace std;
 //sigma sigma on the wall whos the skibidiest of them all
@@ -188,6 +189,13 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
 
 }
 
+void databasecommand(vector<string> commandwords){
+    const char* relativePath = "fileinput2.mdb"; // Replace with your file name
+    char fullPath[MAX_PATH];
+    GetFullPathName(relativePath, MAX_PATH, fullPath, NULL);
+    cout << fullPath << endl;
+}
+
 void commandlist(vector<string> commandwords){  //If the first command is CREATE, do createfunction,else if first command is INSERT,do insertfunction
 
 
@@ -199,8 +207,7 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
         }
         if(commandwords[i].compare("DATABASES") == 0){
             //cout << commandwords[i] << endl;
-            cout << "DO DATABASE FUNCTION" << endl;
-            cout << tablename << endl;
+            databasecommand(commandwords);
         }
         if(commandwords[i].compare("TABLES")== 0){
             //cout << commandwords[i] << endl;
