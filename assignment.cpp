@@ -189,11 +189,16 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
 
 }
 
-void databasecommand(vector<string> commandwords){
+void databasecommand(vector<string> databasecommand){
     const char* relativePath = "fileinput2.mdb"; // Replace with your file name
     char fullPath[MAX_PATH];
     GetFullPathName(relativePath, MAX_PATH, fullPath, NULL);
     cout << fullPath << endl;
+}
+
+void tablecommand(vector<string> tablecommand){
+    string tableName = "customer";
+    cout << tableName << endl;
 }
 
 void commandlist(vector<string> commandwords){  //If the first command is CREATE, do createfunction,else if first command is INSERT,do insertfunction
@@ -206,12 +211,10 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
             createcommand(commandwords);
         }
         if(commandwords[i].compare("DATABASES") == 0){
-            //cout << commandwords[i] << endl;
             databasecommand(commandwords);
         }
         if(commandwords[i].compare("TABLES")== 0){
-            //cout << commandwords[i] << endl;
-            cout << "DO TABLE FUNCTION" << endl;
+            tablecommand(commandwords);
         }
         if(commandwords[i].compare("INSERT")==0){
             insertcommand(commandwords);
