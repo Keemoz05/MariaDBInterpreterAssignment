@@ -75,25 +75,89 @@ void selectcommand(vector<string> selectcommand){ //SELECT
 }
 
 void Updatecommand(vector<string> Updatecommand){
-    int customer_id;
-    int email_index;
-    string new_email;
-                            //note customer_id and new email value is place holder right now
-                            //formula for every row's email index number is: (n*7)-1
-    customer_id = 3;
-    email_index = (customer_id * 7) - 1;
 
-    //email updater
-    new_email= "email333";
-    rows[email_index] = new_email;
-    for (string test : Updatecommand){
+    size_t equal_pos1;             //uses size_t data
+    size_t equal_pos2;             //excessive variables :/
+    int customer_id;
+    int WHERE_index;
+    int update_index;
+    int SET_index;
+    int col_index;
+    int email_index;
+    string id_location;
+    string update_location;
+    string extracted_id;
+    string comparer_1;
+    string comparer_2;
+    string column_name;
+    string new_val;                 //Note: formula for every row's email index number is: (n*7)-1
+
+    WHERE_index = -1;
+    SET_index = -1;
+    comparer_1 = "WHERE";
+    comparer_2 = "SET";
+
+   for (string test : Updatecommand){
         cout << test << endl;
     }
+   for (auto column : columns){
+    cout << column << endl;
+   }
 
+    //find customer_id in WHERE and new_val in SET
+    for(int i = 0; i < Updatecommand.size(); i++){
 
+        if(Updatecommand[i] == comparer_1){
 
+            WHERE_index = i+1;
+            cout << "Where is located at index number "<< WHERE_index << endl;
 
+            id_location = Updatecommand[WHERE_index];
+            cout << id_location << endl;
+
+            equal_pos1 = id_location .find("=");                      //Finds = sign
+            extracted_id = (id_location .substr(equal_pos1 + 1));     //finds the int number
+            cout << extracted_id << endl;
+            customer_id = stoi(extracted_id);
+            cout << customer_id << endl;
+            break;
+        }
+
+        if(Updatecommand[i] == comparer_2 ){                           //ensure WHERE is found first before running SET
+
+            SET_index = i+1;                        //finds keyword after the command SET e.g "customer_email=email333"
+            cout << "SET is located at index number "<< SET_index << endl;
+
+            update_location = Updatecommand[SET_index];
+            equal_pos2 = update_location.find("=");
+            column_name = (update_location.substr(0 , equal_pos2)); //get the string of column_name before the "=" sign
+            cout << column_name << endl;
+            new_val = (update_location.substr(equal_pos2 + 1)); //need to remove quotation marks
+            cout << new_val << endl;
+        }
+    }
+
+    //column_name comparer, if the input matches, assigns the corresponding column index number
+    for(int i = 0; i < columns.size(); i++){
+
+        if(columns[i] == column_name){
+
+            col_index = i;
+            update_index = ((customer_id*7) - 7) + col_index;
+
+        }
+
+        else{
+
+            cout << "No matching column name" << endl;
+
+        }
+    }
+
+    //updater
+    rows[update_index] = new_val;
 }
+
 
 void Deletecommand(vector<string> Deletecommand){
 
@@ -107,13 +171,20 @@ void Deletecommand(vector<string> Deletecommand){
     int start_element;
     int vector_bound;
 
+
     comparer = "WHERE"; //finds the WHERE command in vector of strings in the DEL command line
+    WHERE_index = -1; //base value of WHEERE, also indicates error
     for(int i =0 ; i < Deletecommand.size() ; i++){
 
 
         if(Deletecommand[i] == comparer){
-            WHERE_index = i;
+            WHERE_index = i+1; //assumes the index after DELETE is where customer_id is
             cout << WHERE_index << endl;
+            del_location = Deletecommand[WHERE_index];
+            cout << del_location << endl;
+            equal_pos = del_location.find("customer_id=");         //find customer_id=
+            extracted_id = (del_location.substr(equal_pos+12));     //finds the int number
+
             break;
 
 
@@ -121,12 +192,12 @@ void Deletecommand(vector<string> Deletecommand){
 
     }
 
+    if(WHERE_index == -1){
+        cout << "WHERE command not found, please include proper commands in input file" << endl; //error checking
+    }
+
     //for(string commands : Deletecommand){ //goes through each strings in the line that has DELETE (ignore for now)
-    WHERE_index = WHERE_index + 1;              //assumes the index after DELETE is where customer_id is
-    del_location = Deletecommand[WHERE_index];
-    cout << del_location << endl;
-    equal_pos = del_location.find("customer_id=");         //find customer_id=
-    extracted_id = (del_location.substr(equal_pos+12));     //finds the int number
+
 
 
     //}
@@ -152,18 +223,10 @@ void Deletecommand(vector<string> Deletecommand){
         //exit(0);
     //}
 
-                                                                                    //issues
-                                                                                    //1. commas need to be removed
-                                                                                    //2. yet to find reason why fourth line cannot be removed
-                                                                                    //3. check for invalid customer_
-
-    rows.erase(rows.begin() + start_element, rows.begin() + customer_index);
-
-
+    rows.erase(rows.begin() + start_element, rows.begin() + customer_index); //actual line that removes a row
 
 
 }
-
 
 
 
