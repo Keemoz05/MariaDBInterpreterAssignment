@@ -57,7 +57,6 @@ void selectcommand(vector<string> selectcommand){ //SELECT
         else{
             cout << columns[i] << ",";
         }
-
     }
     cout << endl;
 
@@ -97,12 +96,8 @@ void Updatecommand(vector<string> Updatecommand){
     comparer_1 = "WHERE";
     comparer_2 = "SET";
 
-   for (string test : Updatecommand){
-        cout << test << endl;
-    }
-   for (auto column : columns){
-    cout << column << endl;
-   }
+
+
 
     //find customer_id in WHERE and new_val in SET
     for(int i = 0; i < Updatecommand.size(); i++){
@@ -122,12 +117,9 @@ void Updatecommand(vector<string> Updatecommand){
             cout << customer_id << endl;
             break;
         }
-
         if(Updatecommand[i] == comparer_2 ){                           //ensure WHERE is found first before running SET
-
             SET_index = i+1;                        //finds keyword after the command SET e.g "customer_email=email333"
             cout << "SET is located at index number "<< SET_index << endl;
-
             update_location = Updatecommand[SET_index];
             equal_pos2 = update_location.find("=");
             column_name = (update_location.substr(0 , equal_pos2)); //get the string of column_name before the "=" sign
@@ -186,8 +178,6 @@ void Deletecommand(vector<string> Deletecommand){
             extracted_id = (del_location.substr(equal_pos+12));     //finds the int number
 
             break;
-
-
         }
 
     }
@@ -249,7 +239,6 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
         rows.push_back(token);
     }
 
-
 }
 
 void databasecommand(vector<string> databasecommand){
@@ -288,8 +277,6 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
 
         }
         if(commandwords[i].compare("UPDATE") == 0){ //introduce error catching in future iterations
-
-
             cout << "Do update function"<< endl;
             Updatecommand(commandwords);
         }
@@ -297,8 +284,6 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
 
 
         if(commandwords[i].compare("DELETE") == 0){
-
-
             cout << "Do delete function"<< endl;
             Deletecommand(commandwords);
         }
