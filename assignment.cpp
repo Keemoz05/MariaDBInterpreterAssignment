@@ -7,10 +7,13 @@
 #include <windows.h>
 
 using namespace std;
-//sigma sigma on the wall whos the skibidiest of them all
+
 string tablename; //This will have the customer table
 vector<string> columns;
 vector<string> rows;
+string removeQuotes(string& str); //function prototype
+
+
 
 string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
     string cleanStr;
@@ -125,7 +128,9 @@ void Updatecommand(vector<string> Updatecommand){
             column_name = (update_location.substr(0 , equal_pos2)); //get the string of column_name before the "=" sign
             cout << column_name << endl;
             new_val = (update_location.substr(equal_pos2 + 1)); //need to remove quotation marks
+            new_val = removeQuotes(new_val);
             cout << new_val << endl;
+
         }
     }
 
@@ -139,11 +144,6 @@ void Updatecommand(vector<string> Updatecommand){
 
         }
 
-        else{
-
-            cout << "No matching column name" << endl;
-
-        }
     }
 
     //updater
@@ -171,10 +171,15 @@ void Deletecommand(vector<string> Deletecommand){
 
         if(Deletecommand[i] == comparer){
             WHERE_index = i+1; //assumes the index after DELETE is where customer_id is
+
             cout << WHERE_index << endl;
+
             del_location = Deletecommand[WHERE_index];
+
             cout << del_location << endl;
+
             equal_pos = del_location.find("customer_id=");         //find customer_id=
+
             extracted_id = (del_location.substr(equal_pos+12));     //finds the int number
 
             break;
@@ -218,7 +223,20 @@ void Deletecommand(vector<string> Deletecommand){
 
 }
 
+string removeQuotes(string& str){ //for loop function used to remove quotation marks in inputs
 
+    for( int i = 0; i < str.length();){
+
+       if (str[i] == '\'' || str[i] == '"') {    //character after \ treated literally
+            str.erase(i,1);                       //remove the character that has quotation marks
+        }
+        else{
+            i++;
+        }
+
+    }
+    return str;
+}
 
 
 void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(customer_id,customer_name) VALUES (1, 'namel')
@@ -242,7 +260,7 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
 }
 
 void databasecommand(vector<string> databasecommand){
-    const char* relativePath = "fileinput2.mdb"; // Replace with your file name
+    const char* relativePath = "fileinput1.mdb"; // Replace with your file name
     char fullPath[MAX_PATH];
     GetFullPathName(relativePath, MAX_PATH, fullPath, NULL);
     cout << fullPath << endl;
