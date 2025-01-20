@@ -61,6 +61,8 @@ void selectcommand(vector<string> selectcommand){ //SELECT
         return ;
     }
 
+    outFile << tablename << endl;
+
 
     for (int i=0; i < columns.size(); i++){
         if (i == 6){
