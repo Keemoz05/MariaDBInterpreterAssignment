@@ -306,9 +306,15 @@ while (getline (MyReadFile, MyText,';')) {
   MyText = sanitize(MyText);
   commands.push_back(MyText);
 }
+
+MyReadFile.close();
+
+ofstream outFile("output1.txt", ios::out); //opening the file
+
 for (int i =0;i < commands.size();i++){
     //THIS IS TO BREAK COMMAND DOWN LINE BY LINE
     cout << ">" << commands[i] << endl;
+    outFile << ">" << commands[i] << endl;
     string sentences = commands[i]; //im not sure if you need to stringify it so it wont break
     stringstream stream(sentences); //change sentences to a stream object so getline can work
     vector<string> words;
@@ -323,7 +329,7 @@ for (int i =0;i < commands.size();i++){
 
 }
 
-
+outFile.close();
 
 
 }
