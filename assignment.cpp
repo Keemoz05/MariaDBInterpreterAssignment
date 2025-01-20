@@ -12,6 +12,7 @@ using namespace std;
 string tablename; //This will have the customer table
 vector<string> columns;
 vector<string> rows;
+string removeQuotes(string& str); //function prototype
 ofstream outFile;
 
 string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
@@ -153,6 +154,7 @@ void Updatecommand(vector<string> Updatecommand){
             column_name = (update_location.substr(0 , equal_pos2)); //get the string of column_name before the "=" sign
             cout << column_name << endl;
             new_val = (update_location.substr(equal_pos2 + 1)); //need to remove quotation marks
+            new_val = removeQuotes(new_val);
             cout << new_val << endl;
         }
     }
@@ -214,13 +216,7 @@ void Deletecommand(vector<string> Deletecommand){
         cout << "WHERE command not found, please include proper commands in input file" << endl; //error checking
     }
 
-    //for(string commands : Deletecommand){ //goes through each strings in the line that has DELETE (ignore for now)
-
-
-
-    //}
     customer_id = stoi(extracted_id); //converts str to int for customer_id
-
 
     customer_index = (customer_id * 7); //last element to delete
     start_element = customer_index - 7;
@@ -231,21 +227,25 @@ void Deletecommand(vector<string> Deletecommand){
 
     cout << "True vector bound is " << vector_bound << endl;
 
-    //if (customer_index == vector_bound){
-        //customer_index = customer_index - 1; //if vector bound exceed by only 1 (e.g the last row), make sures the vector range is not exceeded
-        //cout << "customer index is " << customer_index<<endl;
-    //}
-
-    //else {
-        //cout << "The vector bound has been exceeded, program will terminate from this point." << endl;
-        //exit(0);
-    //}
-
     rows.erase(rows.begin() + start_element, rows.begin() + customer_index); //actual line that removes a row
 
 
 }
 
+
+string removeQuotes(string& str){ //for loop function used to remove quotation marks in user inputs, accept strings as arguments
+
+    for( int i = 0; i < str.length();){
+
+       if (str[i] == '\'' || str[i] == '"') {    //character after \ treated literally
+            str.erase(i,1);                       //remove the character that has quotation marks
+        }
+        else{
+            i++;
+        }
+    }
+    return str;
+}
 
 
 
