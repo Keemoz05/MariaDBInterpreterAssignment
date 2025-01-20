@@ -61,7 +61,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
         return ;
     }
 
-    outFile << tablename << endl;
+    outFile << tablename << endl << endl;
 
 
     for (int i=0; i < columns.size(); i++){
