@@ -5,12 +5,14 @@
 #include <vector>
 #include <sstream> //Reminder that the code has a whitespace problem. If its magically not working, probably because of this.
 #include <windows.h>
+#include <streambuf>
 
 using namespace std;
 //sigma sigma on the wall whos the skibidiest of them all
 string tablename; //This will have the customer table
 vector<string> columns;
 vector<string> rows;
+ofstream outFile;
 
 string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
     string cleanStr;
@@ -50,27 +52,51 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 }
 
 void selectcommand(vector<string> selectcommand){ //SELECT
+
+    string filename = "customerData.txt"; //creating the text file
+
+    ofstream outFile(filename, ios::out); //opening the file
+    if (!outFile.is_open()){
+        cerr << "Error: Could not create file " << filename << endl;
+        return ;
+    }
+
+
     for (int i=0; i < columns.size(); i++){
         if (i == 6){
             cout << columns[i];
+            outFile << columns[i]; //inputing the data in the file
         }
         else{
             cout << columns[i] << ",";
+            outFile << columns[i] << ",";
         }
     }
     cout << endl;
+    outFile << endl;
 
     for (int i=0; i < rows.size(); i++){
         if (i == 6 || i == 13 || i == 20 || i == 27){
             cout << rows[i];
+            outFile << rows[i];
         }
         else{
             cout << rows[i] << ",";
+            outFile << rows[i] << ",";
         }
 
-        if (i == 6 || i == 13 || i == 20 || i == 27) //insert new lines
+        if (i == 6 || i == 13 || i == 20 || i == 27){ //insert new lines
            cout << endl;
+           outFile << endl;
+        }
     }
+
+    cout << "SAVING" << endl; 
+
+    outFile.flush();
+
+    outFile.close(); //close the file
+    return ;
 }
 
 void Updatecommand(vector<string> Updatecommand){
@@ -296,7 +322,6 @@ string command;
 string MyText;
 vector<string> commands;
 ifstream MyReadFile("fileinput2.mdb");
-
 
 
 while (getline (MyReadFile, MyText,';')) {
