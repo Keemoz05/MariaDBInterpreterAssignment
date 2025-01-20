@@ -13,7 +13,7 @@ string tablename; //This will have the customer table
 vector<string> columns;
 vector<string> rows;
 string removeQuotes(string& str); //function prototype
-ofstream outFile;
+ofstream outFile("output.txt", ios::out);
 
 string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
     string cleanStr;
@@ -52,18 +52,11 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 }
 
 void selectcommand(vector<string> selectcommand){ //SELECT
-
-    string filename = "customerData.txt"; //creating the text file
-
-    ofstream outFile(filename, ios::out); //opening the file
-    if (!outFile.is_open()){
-        cerr << "Error: Could not create file " << filename << endl;
-        return ;
+    if (selectcommand[1] == ("COUNT(*)")){
+        cout << rows.size() / 7 << endl;
+        outFile << rows.size() / 7 << endl;
     }
-
-    outFile << tablename << endl << endl;
-
-
+    else{
     for (int i=0; i < columns.size(); i++){
         if (i == 6){
             cout << columns[i];
@@ -92,13 +85,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
            outFile << endl;
         }
     }
-
-    cout << "SAVING" << endl; 
-
-    outFile.flush();
-
-    outFile.close(); //close the file
-    return ;
+    }
 }
 
 void Updatecommand(vector<string> Updatecommand){
@@ -250,11 +237,13 @@ void databasecommand(vector<string> databasecommand){
     char fullPath[MAX_PATH];
     GetFullPathName(relativePath, MAX_PATH, fullPath, NULL);
     cout << fullPath << endl;
+    outFile << fullPath << endl;
+
 }
 
 void tablecommand(vector<string> tablecommand){
-    string tableName = "customer";
-    cout << tableName << endl;
+    cout << tablename << endl;
+    outFile << tablename << endl;
 }
 
 void commandlist(vector<string> commandwords){  //If the first command is CREATE, do createfunction,else if first command is INSERT,do insertfunction
@@ -309,7 +298,7 @@ while (getline (MyReadFile, MyText,';')) {
 
 MyReadFile.close();
 
-ofstream outFile("output1.txt", ios::out); //opening the file
+ //opening the file
 
 for (int i =0;i < commands.size();i++){
     //THIS IS TO BREAK COMMAND DOWN LINE BY LINE
