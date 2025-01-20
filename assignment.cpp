@@ -28,10 +28,9 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 
 
     if(createcommand[1].find(".txt") != string::npos ){
-        cout << "Create TXT FILE!" << endl;
+        
     }
     else{
-        cout << "Table Created!" << endl;
         for (int i =2;i < createcommand.size();i++){
         //cout << createcommand[i] << " + ";
         //if ada bracket,remove it,separate it
@@ -134,25 +133,17 @@ void Updatecommand(vector<string> Updatecommand){
         if(Updatecommand[i] == comparer_1){
 
             WHERE_index = i+1;
-            cout << "Where is located at index number "<< WHERE_index << endl;
-
             id_location = Updatecommand[WHERE_index];
-            cout << id_location << endl;
-
             equal_pos1 = id_location .find("=");                      //Finds = sign
             extracted_id = (id_location .substr(equal_pos1 + 1));     //finds the int number
-            cout << extracted_id << endl;
             customer_id = stoi(extracted_id);
-            cout << customer_id << endl;
             break;
         }
         if(Updatecommand[i] == comparer_2 ){                           //ensure WHERE is found first before running SET
             SET_index = i+1;                        //finds keyword after the command SET e.g "customer_email=email333"
-            cout << "SET is located at index number "<< SET_index << endl;
             update_location = Updatecommand[SET_index];
             equal_pos2 = update_location.find("=");
             column_name = (update_location.substr(0 , equal_pos2)); //get the string of column_name before the "=" sign
-            cout << column_name << endl;
             new_val = (update_location.substr(equal_pos2 + 1)); //need to remove quotation marks
             new_val = removeQuotes(new_val);
            
@@ -196,9 +187,7 @@ void Deletecommand(vector<string> Deletecommand){
 
         if(Deletecommand[i] == comparer){
             WHERE_index = i+1; //assumes the index after DELETE is where customer_id is
-            cout << WHERE_index << endl;
             del_location = Deletecommand[WHERE_index];
-            cout << del_location << endl;
             equal_pos = del_location.find("customer_id=");         //find customer_id=
             extracted_id = (del_location.substr(equal_pos+12));     //finds the int number
 
@@ -207,20 +196,12 @@ void Deletecommand(vector<string> Deletecommand){
 
     }
 
-    if(WHERE_index == -1){
-        cout << "WHERE command not found, please include proper commands in input file" << endl; //error checking
-    }
-
     customer_id = stoi(extracted_id); //converts str to int for customer_id
 
     customer_index = (customer_id * 7); //last element to delete
     start_element = customer_index - 7;
 
-    cout << "Start element is "<< customer_index << endl;
-
     vector_bound = rows.size(); //check if vector range has been exceeded or not
-
-    cout << "True vector bound is " << vector_bound << endl;
 
     rows.erase(rows.begin() + start_element, rows.begin() + customer_index); //actual line that removes a row
 
@@ -300,14 +281,12 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
 
         }
         if(commandwords[i].compare("UPDATE") == 0){ //introduce error catching in future iterations
-            cout << "Do update function"<< endl;
             Updatecommand(commandwords);
         }
 
 
 
         if(commandwords[i].compare("DELETE") == 0){
-            cout << "Do delete function"<< endl;
             Deletecommand(commandwords);
         }
     }
