@@ -155,7 +155,7 @@ void Updatecommand(vector<string> Updatecommand){
             cout << column_name << endl;
             new_val = (update_location.substr(equal_pos2 + 1)); //need to remove quotation marks
             new_val = removeQuotes(new_val);
-            cout << new_val << endl;
+           
         }
     }
 
@@ -169,11 +169,6 @@ void Updatecommand(vector<string> Updatecommand){
 
         }
 
-        else{
-
-            cout << "No matching column name" << endl;
-
-        }
     }
 
     //updater
