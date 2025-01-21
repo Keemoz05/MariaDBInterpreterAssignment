@@ -1,4 +1,4 @@
-CREATE fileOutput1.txt;
+CREATE fileOutput2.txt;
 DATABASES;
 
 CREATE TABLE customer(

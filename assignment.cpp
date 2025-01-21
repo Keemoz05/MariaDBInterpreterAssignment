@@ -6,7 +6,7 @@
 #include <sstream> //Reminder that the code has a whitespace problem. If its magically not working, probably because of this.
 #include <windows.h>
 #include <streambuf>
-
+#include <cstdio> // for file renaming
 using namespace std;
 //sigma sigma on the wall whos the skibidiest of them all
 string tablename; //This will have the customer table
@@ -14,7 +14,7 @@ vector<string> columns;
 vector<string> rows;
 string removeQuotes(string& str); //function prototype
 ofstream outFile("output.txt", ios::out);
-
+string filename;
 string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
     string cleanStr;
     for (char c : str) {
@@ -28,7 +28,7 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 
 
     if(createcommand[1].find(".txt") != string::npos ){
-        
+        filename = createcommand[1];
     }
     else{
         for (int i =2;i < createcommand.size();i++){
@@ -218,12 +218,10 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
     values.erase(values.find("("),1);
     values.erase(values.find(")"),1);
     // Temporary string to store each token
-    std::string token;
+    string token;
 
-    // Use a stringstream for parsing
-    std::stringstream ss(values);
-    while (std::getline(ss, token, ',')) {
-        // Remove single quotes if present
+    stringstream ss(values);
+    while (getline(ss, token, ',')) {
         if (token.front() == '\'') {
             token = token.substr(1, token.size() - 2);
         }
@@ -233,7 +231,7 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
 }
 
 void databasecommand(vector<string> databasecommand){
-    const char* relativePath = "fileinput2.mdb"; // Replace with your file name
+    const char* relativePath = "fileinput1.mdb"; // Replace with your file name
     char fullPath[MAX_PATH];
     GetFullPathName(relativePath, MAX_PATH, fullPath, NULL);
     cout << fullPath << endl;
@@ -282,7 +280,7 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
 
 }
 int main(){
-
+cout << "WHERE IS THE COUT BRUHHHH" << endl;
 string command;
 string MyText;
 vector<string> commands;
@@ -319,7 +317,7 @@ for (int i =0;i < commands.size();i++){
 }
 
 outFile.close();
-
+rename("output.txt",filename.c_str()); //c_str to change string filename to char const
 
 }
 
