@@ -1,7 +1,6 @@
 #include <iostream> //To use the fstream library, include both the standard <iostream> AND the <fstream> header file
 #include <string>
 #include <fstream> //A combination of ofstream and ifstream: creates, reads, and writes to files
-#include <bits/stdc++.h>
 #include <vector>
 #include <sstream> //Reminder that the code has a whitespace problem. If its magically not working, probably because of this.
 #include <windows.h>
@@ -14,6 +13,7 @@ vector<string> columns;
 vector<string> rows;
 string removeQuotes(string& str); //function prototype
 ofstream outFile("output.txt", ios::out);
+string filetoread = "fileinput1.mdb";
 string filename;
 string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
     string cleanStr;
@@ -214,10 +214,37 @@ string removeQuotes(string& str){ //for loop function used to remove quotation m
 
 void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(customer_id,customer_name) VALUES (1, 'namel')
 
-    string values = insertcommand.back();
+    //column checking part
+    bool closedbuttcheek = false;
+    vector<string> yuvansbuttcheeks;
+    string columnstoinsert = insertcommand[2];
+    columnstoinsert = columnstoinsert.substr(columnstoinsert.find("("),columnstoinsert.find(")"));
+    columnstoinsert.erase(columnstoinsert.find("("),1);
+    columnstoinsert.erase(columnstoinsert.find(")"),1);
+    stringstream sss(columnstoinsert);
+    string ww;
+    while(getline(sss,ww,',')){
+        yuvansbuttcheeks.push_back(ww);
+    }
+    for (int i = 0;i < yuvansbuttcheeks.size();i++){
+        if(yuvansbuttcheeks[i] == columns[i]){
+            closedbuttcheek = true;
+        }
+        else{
+            cout << "Error! Column input does not match size and name." << endl;
+            outFile << "Error! Column input does not match size and name." << endl;
+            closedbuttcheek = false;
+            break;
+        }
+    }    
+    
+    
+    if(closedbuttcheek == true){
+    //values part
+    string values = insertcommand.back(); //cheese method to only take the last string, (1,"name1")...
     values.erase(values.find("("),1);
     values.erase(values.find(")"),1);
-    // Temporary string to store each token
+    // Temporary string to store each token for getline to work
     string token;
 
     stringstream ss(values);
@@ -227,16 +254,15 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
         }
         rows.push_back(token);
     }
-
+    }
 }
 
 void databasecommand(vector<string> databasecommand){
-    const char* relativePath = "fileinput1.mdb"; // Replace with your file name
+    const char* relativePath = filetoread.c_str(); 
     char fullPath[MAX_PATH];
     GetFullPathName(relativePath, MAX_PATH, fullPath, NULL);
     cout << fullPath << endl;
     outFile << fullPath << endl;
-
 }
 
 void tablecommand(vector<string> tablecommand){
@@ -280,15 +306,13 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
 
 }
 int main(){
-cout << "WHERE IS THE COUT BRUHHHH" << endl;
 string command;
 string MyText;
 vector<string> commands;
-ifstream MyReadFile("fileinput2.mdb");
+ifstream MyReadFile(filetoread);
 
 
 while (getline (MyReadFile, MyText,';')) {
-  // Output the text from the file
   //cout << MyText;
   MyText = sanitize(MyText);
   commands.push_back(MyText);
@@ -317,6 +341,7 @@ for (int i =0;i < commands.size();i++){
 }
 
 outFile.close();
+remove(filename.c_str());
 rename("output.txt",filename.c_str()); //c_str to change string filename to char const
 
 }
