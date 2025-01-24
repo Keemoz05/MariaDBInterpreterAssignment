@@ -90,8 +90,8 @@ void selectcommand(vector<string> selectcommand){ //SELECT
 
 void Updatecommand(vector<string> Updatecommand){
 
-    size_t equal_pos1;             //uses size_t data
-    size_t equal_pos2;             //excessive variables :/
+    size_t equal_pos1;             //uses size_t data, which is an unsigned integer type
+    size_t equal_pos2;            
     int customer_id;
     int WHERE_index;
     int update_index;
@@ -104,7 +104,7 @@ void Updatecommand(vector<string> Updatecommand){
     string comparer_1;
     string comparer_2;
     string column_name;
-    string new_val;                 //Note: formula for every row's email index number is: (n*7)-1
+    string new_val;                 //Note: formula for every row's customer info index number is: (n*7)-y, with y being the position in the column
 
     WHERE_index = -1;
     SET_index = -1;
@@ -119,12 +119,12 @@ void Updatecommand(vector<string> Updatecommand){
 
             WHERE_index = i+1;
             id_location = Updatecommand[WHERE_index];
-            equal_pos1 = id_location .find("=");                      //Finds = sign
+            equal_pos1 = id_location .find("=");                      //Finds '=' sign
             extracted_id = (id_location .substr(equal_pos1 + 1));     //finds the int number
             customer_id = stoi(extracted_id);
             break;
         }
-        if(Updatecommand[i] == comparer_2 ){                           //ensure WHERE is found first before running SET
+        if(Updatecommand[i] == comparer_2 ){                          
             SET_index = i+1;                        //finds keyword after the command SET e.g "customer_email=email333"
             update_location = Updatecommand[SET_index];
             equal_pos2 = update_location.find("=");
