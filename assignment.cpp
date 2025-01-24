@@ -1,20 +1,22 @@
-#include <iostream> //To use the fstream library, include both the standard <iostream> AND the <fstream> header file
+#include <iostream> //To use fstream library, include both the standard <iostream> AND the <fstream> header file
 #include <string>
-#include <fstream> //A combination of ofstream and ifstream: creates, reads, and writes to files
+#include <fstream> 
 #include <vector>
 #include <sstream> //Reminder that the code has a whitespace problem. If its magically not working, probably because of this.
-#include <windows.h>
-#include <streambuf>
+#include <windows.h> // for finding path
 #include <cstdio> // for file renaming
 using namespace std;
-//sigma sigma on the wall whos the skibidiest of them all
+
+string filetoread = "fileinput1.mdb";
+
 string tablename; //This will have the customer table
 vector<string> columns;
 vector<string> rows;
 string removeQuotes(string& str); //function prototype
 ofstream outFile("output.txt", ios::out);
-string filetoread = "fileinput1.mdb";
+
 string filename;
+
 string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
     string cleanStr;
     for (char c : str) {
@@ -24,7 +26,8 @@ string sanitize(const string& str) {  //This is used to make sure every string i
     }
     return cleanStr;
 }
-void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(customer_id INT,customer_name TEXT..), This function is to Get its table name(customer) and store the customer_id,customer_name.. in vector columns from line 10.
+
+void createcommand(vector<string> createcommand){ //createcommand = {CREATE,TABLE customer()...}
 
 
     if(createcommand[1].find(".txt") != string::npos ){
@@ -41,9 +44,6 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
         else if (createcommand[i].find(")") == -1){ //if no bracket, just push the table column inside vector<string> column
             columns.push_back(createcommand[i].substr(createcommand[i].find(",")+1,createcommand[i].length()));
         }
-
-
-
     }
 
 
@@ -53,8 +53,8 @@ void createcommand(vector<string> createcommand){ //From CREATE TABLE customer(c
 
 void selectcommand(vector<string> selectcommand){ //SELECT
     if (selectcommand[1] == ("COUNT(*)")){
-        cout << rows.size() / 7 << endl;
-        outFile << rows.size() / 7 << endl;
+        cout << rows.size() / columns.size() + 1 << endl;
+        outFile << rows.size() / columns.size() + 1 << endl; //there is 7 columns inside customer. 
     }
     else{
     for (int i=0; i < columns.size(); i++){
@@ -68,7 +68,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
         }
     }
     cout << endl;
-    outFile << endl;
+    outFile << endl; // adds new line after listing all the columns
 
     for (int i=0; i < rows.size(); i++){
         if (i == 6 || i == 13 || i == 20 || i == 27){
@@ -110,8 +110,6 @@ void Updatecommand(vector<string> Updatecommand){
     SET_index = -1;
     comparer_1 = "WHERE";
     comparer_2 = "SET";
-
-
 
 
     //find customer_id in WHERE and new_val in SET
@@ -212,11 +210,11 @@ string removeQuotes(string& str){ //for loop function used to remove quotation m
 
 
 
-void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(customer_id,customer_name) VALUES (1, 'namel')
+void insertcommand(vector<string> insertcommand){ //insertcommand = {INSERT INTO}
 
-    //column checking part
-    bool closedbuttcheek = false;
-    vector<string> yuvansbuttcheeks;
+    //this segment verifies the given input column to insert the values into
+    bool isInputColumn = false;
+    vector<string> inputcolumn;
     string columnstoinsert = insertcommand[2];
     columnstoinsert = columnstoinsert.substr(columnstoinsert.find("("),columnstoinsert.find(")"));
     columnstoinsert.erase(columnstoinsert.find("("),1);
@@ -224,22 +222,23 @@ void insertcommand(vector<string> insertcommand){ //INSERT INTO customer(custome
     stringstream sss(columnstoinsert);
     string ww;
     while(getline(sss,ww,',')){
-        yuvansbuttcheeks.push_back(ww);
+        inputcolumn.push_back(ww);
     }
-    for (int i = 0;i < yuvansbuttcheeks.size();i++){
-        if(yuvansbuttcheeks[i] == columns[i]){
-            closedbuttcheek = true;
+
+    for (int i = 0;i < inputcolumn.size();i++){
+        if(inputcolumn[i] == columns[i]){
+            isInputColumn = true;
         }
         else{
             cout << "Error! Column input does not match size and name." << endl;
             outFile << "Error! Column input does not match size and name." << endl;
-            closedbuttcheek = false;
+            isInputColumn = false;
             break;
         }
     }    
     
-    
-    if(closedbuttcheek == true){
+    //if all column input is correct, insert the values.
+    if(isInputColumn == true){
     //values part
     string values = insertcommand.back(); //cheese method to only take the last string, (1,"name1")...
     values.erase(values.find("("),1);
@@ -287,18 +286,14 @@ void commandlist(vector<string> commandwords){  //If the first command is CREATE
         }
         if(commandwords[i].compare("INSERT")==0){
             insertcommand(commandwords);
-
         }
         if(commandwords[i].compare("SELECT") == 0){
             selectcommand(commandwords);
 
         }
-        if(commandwords[i].compare("UPDATE") == 0){ //introduce error catching in future iterations
+        if(commandwords[i].compare("UPDATE") == 0){ 
             Updatecommand(commandwords);
         }
-
-
-
         if(commandwords[i].compare("DELETE") == 0){
             Deletecommand(commandwords);
         }
@@ -309,9 +304,9 @@ int main(){
 string command;
 string MyText;
 vector<string> commands;
-ifstream MyReadFile(filetoread);
 
-
+//this section reads the given input file and saves each line separated by ';'  into the vector commands;
+ifstream MyReadFile(filetoread); 
 while (getline (MyReadFile, MyText,';')) {
   //cout << MyText;
   MyText = sanitize(MyText);
@@ -320,19 +315,18 @@ while (getline (MyReadFile, MyText,';')) {
 
 MyReadFile.close();
 
- //opening the file
 
 for (int i =0;i < commands.size();i++){
     //THIS IS TO BREAK COMMAND DOWN LINE BY LINE
     cout << ">" << commands[i] << endl;
     outFile << ">" << commands[i] << endl;
-    string sentences = commands[i]; //im not sure if you need to stringify it so it wont break
+    string sentences = commands[i];  //commands[0] = "CREATE fileoutput1.txt"
     stringstream stream(sentences); //change sentences to a stream object so getline can work
     vector<string> words;
     string s; //temporary string storage
     while (getline (stream,s,' ')) {
         if(!s.empty()){
-                words.push_back(s); //THIS IS TO BREAK EACH LINE INTO WORD BY WORD,words is an array now
+                words.push_back(s); //THIS IS TO BREAK EACH LINE INTO WORD BY WORD and store it into vector words;
         }
 
     }
