@@ -10,8 +10,8 @@
 //Member_3:
 // **************************************************************************************
 //Task distribution
-//Member_1:
-//Member_2: Update, delete and remove quotes function
+//Member_1: Main, Create and Insert functions
+//Member_2: Main, Update, Delete and remove quotes function
 //Member_3:
 // **************************************************************************************
 
