@@ -53,8 +53,8 @@ void createcommand(vector<string> createcommand){ //createcommand = {CREATE,TABL
 
 void selectcommand(vector<string> selectcommand){ //SELECT
     if (selectcommand[1] == ("COUNT(*)")){
-        cout << rows.size() / columns.size() + 1 << endl;
-        outFile << rows.size() / columns.size() + 1 << endl; //there is 7 columns inside customer. 
+        cout << rows.size() / columns.size()  << endl;
+        outFile << rows.size() / columns.size()  << endl; //there is 7 columns inside customer. 
     }
     else{
     for (int i=0; i < columns.size(); i++){
