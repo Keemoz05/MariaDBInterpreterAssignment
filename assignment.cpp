@@ -1,3 +1,24 @@
+//**************************************************************************************
+//
+//Program: assignment.cpp
+//Course: CCP6114 Programming Fundamentals
+//Lecture Class: TC1L
+//Tutorial Class:
+//Trimester: 2430
+//Member_1:ID  | NAME  | EMAIL | PHONE
+//Member_2: 242UC244LR | CHAN CHUAN MENG | CHAN.CHUAN.MENG@student.mmu.edu.my | 0125293192
+//Member_3:
+// **************************************************************************************
+//Task distribution
+//Member_1:
+//Member_2: Update, delete and remove quotes function
+//Member_3:
+// **************************************************************************************
+
+
+
+
+
 #include <iostream> //To use fstream library, include both the standard <iostream> AND the <fstream> header file
 #include <string>
 #include <fstream> 
