@@ -110,6 +110,8 @@ void Updatecommand(vector<string> Updatecommand){
     SET_index = -1;
     comparer_1 = "WHERE";
     comparer_2 = "SET";
+    bool WHERE = false; //boolean variable for error checking
+    bool SET = false;
 
 
     //find customer_id in WHERE and new_val in SET
@@ -134,7 +136,17 @@ void Updatecommand(vector<string> Updatecommand){
            
         }
     }
+    
+    if(WHERE != true){  //error checking
+        cout << "WHERE command for UPDATE command not found, please edit input file." << endl;
+        exit(0);
+    }
 
+    if(SET != true){
+        cout << "SET command for UPDATE command not found, please edit input file." << endl;
+        exit(0);
+    }
+    
     //column_name comparer, if the input matches, assigns the corresponding column index number
     for(int i = 0; i < columns.size(); i++){
 
@@ -163,7 +175,7 @@ void Deletecommand(vector<string> Deletecommand){
     int customer_index;
     int start_element;
     int vector_bound;
-
+    bool WHERE_id = false;
 
     comparer = "WHERE"; //finds the WHERE command in vector of strings in the DEL command line
     WHERE_index = -1; //base value of WHEERE, also indicates error
@@ -180,7 +192,12 @@ void Deletecommand(vector<string> Deletecommand){
         }
 
     }
-
+    
+    if(WHERE_id != true){
+        cout << "WHERE command for DELETE command not found, please edit input file." << endl;
+        exit(0);
+    }
+    
     customer_id = stoi(extracted_id); //converts str to int for customer_id
 
     customer_index = (customer_id * 7); //last element to delete
