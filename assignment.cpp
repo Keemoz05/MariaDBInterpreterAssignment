@@ -3,10 +3,10 @@
 //Program: assignment.cpp
 //Course: CCP6114 Programming Fundamentals
 //Lecture Class: TC1L
-//Tutorial Class:
+//Tutorial Class: TT2L
 //Trimester: 2430
-//Member_1:ID  | NAME  | EMAIL | PHONE
-//Member_2: 242UC244LR | CHAN CHUAN MENG | CHAN.CHUAN.MENG@student.mmu.edu.my | 0125293192
+//Member_1: 242UC244DP | SYED HAQEEM | 242UC244DP | 017-4848002
+//Member_2: 242UC244LR | CHAN CHUAN MENG | CHAN.CHUAN.MENG@student.mmu.edu.my | 012-5293192
 //Member_3:
 // **************************************************************************************
 //Task distribution
