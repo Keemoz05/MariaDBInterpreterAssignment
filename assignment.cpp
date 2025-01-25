@@ -5,7 +5,7 @@
 //Lecture Class: TC1L
 //Tutorial Class: TT2L
 //Trimester: 2430
-//Member_1: 242UC244DP | SYED HAQEEM | 242UC244DP | 017-4848002
+//Member_1: 242UC244DP | SYED HAQEEM | SYED.HAQEEM.SYED@student.mmu.edu.my | 017-4848002
 //Member_2: 242UC244LR | CHAN CHUAN MENG | CHAN.CHUAN.MENG@student.mmu.edu.my | 012-5293192
 //Member_3:
 // **************************************************************************************
