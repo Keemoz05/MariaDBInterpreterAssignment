@@ -118,7 +118,7 @@ void Updatecommand(vector<string> Updatecommand){
     for(int i = 0; i < Updatecommand.size(); i++){
 
         if(Updatecommand[i] == comparer_1){
-
+            WHERE = true;
             WHERE_index = i+1;
             id_location = Updatecommand[WHERE_index];
             equal_pos1 = id_location .find("=");                      //Finds '=' sign
@@ -127,6 +127,7 @@ void Updatecommand(vector<string> Updatecommand){
             break;
         }
         if(Updatecommand[i] == comparer_2 ){                          
+            SET = true;
             SET_index = i+1;                        //finds keyword after the command SET e.g "customer_email=email333"
             update_location = Updatecommand[SET_index];
             equal_pos2 = update_location.find("=");
@@ -183,6 +184,7 @@ void Deletecommand(vector<string> Deletecommand){
 
 
         if(Deletecommand[i] == comparer){
+            WHERE_id = true;
             WHERE_index = i+1; //assumes the index after DELETE is where customer_id is
             del_location = Deletecommand[WHERE_index];
             equal_pos = del_location.find("customer_id=");         //find customer_id=
