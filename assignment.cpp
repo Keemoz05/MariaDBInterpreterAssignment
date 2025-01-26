@@ -312,8 +312,6 @@ void tablecommand(vector<string> tablecommand){
 void commandlist(vector<string> commandwords){  //If the first command is CREATE, do createfunction,else if first command is INSERT,do insertfunction
 
 
-    string firstword = commandwords[0]; //probably not used
-
     for (int i =0;i < commandwords.size();i++){
         if(commandwords[i].compare("CREATE") == 0){
             createcommand(commandwords);
