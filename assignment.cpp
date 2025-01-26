@@ -111,7 +111,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
 
 void Updatecommand(vector<string> Updatecommand){
 
-    int equal_pos1;             //uses size_t data, which is an unsigned integer type
+    int equal_pos1;          
     int equal_pos2;            
     int customer_id;
     int WHERE_index;
@@ -188,7 +188,7 @@ void Updatecommand(vector<string> Updatecommand){
 
 void Deletecommand(vector<string> Deletecommand){
 
-    int equal_pos; //uses size_t data
+    int equal_pos; 
     string extracted_id;
     string del_location;
     string comparer;
