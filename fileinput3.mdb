@@ -1,0 +1,23 @@
+CREATE fileoutput3.txt;
+DATABASES;
+
+CREATE TABLE subjects(
+subject_id INT,
+subject_name TEXT,
+subject_code TEXT
+);
+
+
+TABLES;
+
+INSERT INTO subjects(subject_id,subject_name,subject_code) VALUES (1,'Maths','123');
+INSERT INTO subjects(subject_id,subject_name,subject_code) VALUES (2,'Science','222');
+INSERT INTO subjects(subject_id,subject_name,subject_code) VALUES (3,'BI','333');
+
+SELECT * FROM subjects;
+
+UPDATE subjects SET subject_code='111' WHERE subject_id=1;
+
+SELECT * FROM subjects;
+
+SELECT COUNT(*) FROM customer;

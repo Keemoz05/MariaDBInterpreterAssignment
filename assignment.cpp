@@ -28,7 +28,7 @@
 #include <cstdio> // for file renaming
 using namespace std;
 
-string filetoread = "fileinput1.mdb";
+string filetoread = "fileinput2.mdb";
 
 string tablename; //This will have the customer table
 vector<string> columns;
@@ -41,7 +41,7 @@ string filename;
 string sanitize(const string& str) {  //This is used to make sure every string in the input file is printable because of strange error by .mdb file,just dont disturb this.
     string cleanStr;
     for (char c : str) {
-        if (isprint(c)) { // Check if character is printable
+        if (isprint(c)) { // Check if every character is printable, if it is printable then add it to the string.
             cleanStr += c;
         }
     }
@@ -50,8 +50,7 @@ string sanitize(const string& str) {  //This is used to make sure every string i
 
 void createcommand(vector<string> createcommand){ //createcommand = {CREATE,TABLE customer()...}
 
-
-    if(createcommand[1].find(".txt") != string::npos ){
+    if(createcommand[1].find(".txt") != string::npos ){ //no position
         filename = createcommand[1];
     }
     else{
@@ -79,9 +78,9 @@ void selectcommand(vector<string> selectcommand){ //SELECT
     }
     else{
     for (int i=0; i < columns.size(); i++){
-        if (i == 6){
+        if (i == columns.size() - 1){
             cout << columns[i];
-            outFile << columns[i]; //inputing the data in the file
+            outFile << columns[i]; 
         }
         else{
             cout << columns[i] << ",";
@@ -92,7 +91,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
     outFile << endl; // adds new line after listing all the columns
 
     for (int i=0; i < rows.size(); i++){
-        if (i == 6 || i == 13 || i == 20 || i == 27){
+        if (i % columns.size() == columns.size() - 1){ //this will select the last row in each group of rows bounded by columnsize. 
             cout << rows[i];
             outFile << rows[i];
         }
@@ -101,7 +100,7 @@ void selectcommand(vector<string> selectcommand){ //SELECT
             outFile << rows[i] << ",";
         }
 
-        if (i == 6 || i == 13 || i == 20 || i == 27){ //insert new lines
+        if (i % columns.size() == columns.size() - 1){ //insert new lines
            cout << endl;
            outFile << endl;
         }
